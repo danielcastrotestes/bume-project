@@ -14,7 +14,7 @@ import { AddModalComponent } from '../add-modal/add-modal.component';
 export class TaskListComponent implements OnInit {
 
   tasks: Array<task> = [];
-  newTask: task;
+  todayTasks: Array<task> = [];
   search: string = '';
 
   constructor(
@@ -24,18 +24,35 @@ export class TaskListComponent implements OnInit {
 
   ngOnInit() {
     this.tasks = this.taskService.listTasks();
+    this.updateToday();
+  }
+
+  updateToday() {
+    this.todayTasks = this.taskService.listTasks().filter(t => {
+      const sameDay = (first: Date, second: Date) => (
+        first.getFullYear() === second.getFullYear() &&
+        first.getMonth() === second.getMonth() &&
+        first.getDate() === second.getDate()
+      )
+
+      return sameDay(t.date, new Date());
+    })
+    console.log('LOG: TaskListComponent -> updateToday -> this.todayTasks', this.todayTasks);
   }
 
   addTask(task: task): void {
     this.taskService.addTask(task);
+    this.updateToday();
   }
 
   removeTask(id): void {
     this.taskService.deleteTask(id);
+    this.updateToday();
   }
 
   editTask(task: task): void {
     this.taskService.editTask(task);
+    this.updateToday();
   }
 
   navigateToDetails(task): void {

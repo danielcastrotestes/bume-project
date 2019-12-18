@@ -1,3 +1,19 @@
+<mat-card class="custom-mat-card today" *ngIf="todayTasks && todayTasks.length">
+    <div class="custom-card-header">
+        <div class="container-infos">
+            <mat-card-title>Tarefas para hoje: {{ todayTasks.length }}</mat-card-title>
+        </div>
+    </div>
+
+    <mat-card-content>
+        <mat-list-item *ngFor="let task of todayTasks" (click)="navigateToDetails(task)">
+            {{ task.title }}
+        </mat-list-item>
+    </mat-card-content>
+</mat-card>
+
+
+
 <div class="container-buttons">
 
     <mat-form-field class="example-form-field">
@@ -30,8 +46,8 @@
 <div *ngIf="tasks.length; then haveTasks else noTasks"></div>
 
 <ng-template #haveTasks>
+    <p style="text-align: right">Total de tarefas: {{ tasks.length }}</p>
     <div *ngFor="let task of tasks">
-
         <mat-card class="custom-mat-card">
             <div class="custom-card-header">
                 <div style="flex: 1;" (click)="navigateToDetails(task)">

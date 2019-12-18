@@ -13,10 +13,18 @@
   &:hover {
     box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.4);
   }
+  &.today{
+    margin-bottom: 30px;
+  }
 }
 
 .custom-card-header {
   display: flex;
   width: 100%;
+  justify-content: space-between;
+}
+
+.container-infos {
+  display: flex;
   justify-content: space-between;
 }
