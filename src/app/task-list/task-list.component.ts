@@ -43,6 +43,7 @@ export class TaskListComponent implements OnInit {
   addTask(task: task): void {
     this.taskService.addTask(task);
     this.updateToday();
+    this.orderBy('priority');
   }
 
   removeTask(id): void {
