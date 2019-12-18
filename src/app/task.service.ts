@@ -62,9 +62,11 @@ export class TaskService {
     task.id = task.date.getTime();
 
     if (!task.title || !task.title.length) { task.title = `Tarefa ${task.id}` }
+    if (!task.desc || !task.desc.length) { task.desc = '' }
     if (!task.priority) { task.priority = 1 }
     if (!task.done) { task.done = false }
 
+    console.log('LOG: TaskService -> task', task);
     this.initialList.push(task);
     this._setList();
     return this.initialList;

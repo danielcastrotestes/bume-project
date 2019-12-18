@@ -38,8 +38,8 @@ export class TaskListComponent implements OnInit {
     this.taskService.editTask(task);
   }
 
-  navigateToDetails(id): void {
-    this.router.navigateByUrl(`task/${id}`)
+  navigateToDetails(task): void {
+    this.router.navigate(['/task', { ...task }]);
   }
 
   orderBy(order: string): void {

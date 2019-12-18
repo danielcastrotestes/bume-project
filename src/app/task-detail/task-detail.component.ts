@@ -15,8 +15,10 @@ export class TaskDetailComponent implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      this.task = tasks[params.get('id')];
-      console.log('LOG: TaskDetailComponent -> ngOnInit -> this.task', this.task);
+      this.task = {}
+      params.keys.map(val => {
+        this.task[val] = params.get(val);
+      })
     })
   }
 
