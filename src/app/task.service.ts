@@ -44,6 +44,7 @@ export class TaskService {
 
   constructor() {
     this.tasks = ARRAY_TASKS;
+    this.orderBy('priority')
   }
 
   addTask(task: task): Array<task> {
