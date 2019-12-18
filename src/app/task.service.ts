@@ -41,10 +41,20 @@ const ARRAY_TASKS: Array<task> = [
 })
 export class TaskService {
   tasks: Array<task>;
+  initialList: Array<task>;
 
   constructor() {
-    this.tasks = ARRAY_TASKS;
+    this.initialList = ARRAY_TASKS;
     this.orderBy('priority')
+    this._setList();
+  }
+
+  _setList(): void {
+    if (!this.tasks) { this.tasks = [] }
+    this.tasks.splice(0, this.tasks.length);
+    this.initialList.forEach(task => {
+      this.tasks.push(task)
+    })
   }
 
   addTask(task: task): Array<task> {
@@ -55,43 +65,63 @@ export class TaskService {
     if (!task.priority) { task.priority = 1 }
     if (!task.done) { task.done = false }
 
-    this.tasks.push(task);
-    return this.tasks;
+    this.initialList.push(task);
+    this._setList();
+    return this.initialList;
   }
 
   deleteTask(id: number): Array<task> {
-    const index = this.tasks.findIndex(task => task.id === id);
-    this.tasks.splice(index, 1);
-    return this.tasks;
+    const index = this.initialList.findIndex(task => task.id === id);
+    this.initialList.splice(index, 1);
+    this._setList();
+    return this.initialList;
   }
 
   editTask(infos: task): Array<task> {
-    const index = this.tasks.findIndex(task => task.id === infos.id)
-    const old = this.tasks[index];
-    this.tasks[index] = { ...old, ...infos }
-    return this.tasks;
+    const index = this.initialList.findIndex(task => task.id === infos.id)
+    const old = this.initialList[index];
+    this.initialList[index] = { ...old, ...infos };
+    this._setList();
+    return this.initialList;
   }
 
   listTasks(): Array<task> {
     return this.tasks;
   }
 
-  // searchByTitle(title: string): task {
-  //   return true;
-  // }
+  searchByTitle(title: string): Array<task> {
+    function _normalizeExpression(expression = '') {
+      return expression.replace(/\s/g, '').toLowerCase()
+    }
 
-  // getTask(id: number): task {
-  //   return true;
-  // }
+    const filteredArray = this.initialList.filter(task => {
+      if (!title.length) { return true }
+      const titleNorm = _normalizeExpression(task.title);
+      const descNorm = _normalizeExpression(task.desc);
+      const termNorm = _normalizeExpression(title);
+      const regex = new RegExp(`${termNorm}`);
+      const match = (regex.test(titleNorm) || regex.test(descNorm))
+      return match;
+    })
+
+    this.tasks.splice(0, this.tasks.length);
+    filteredArray.forEach(task => {
+      this.tasks.push(task)
+    })
+
+    return this.tasks;
+
+  }
 
   orderBy(order: string): void {
     if (!order) { return }
-    this.tasks = this.tasks.sort((task1, task2) => {
+    this.initialList = this.initialList.sort((task1, task2) => {
       if (task1[order] === undefined || task2[order] === undefined) { return 0; }
       if (task1[order] > task2[order]) { return -1; }
       if (task1[order] < task2[order]) { return 1; }
       return 0;
     })
+    this._setList();
   }
 
 }

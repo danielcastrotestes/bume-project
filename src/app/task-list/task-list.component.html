@@ -1,17 +1,30 @@
 <div class="container-buttons">
-    <button mat-button mat-raised-button [matMenuTriggerFor]="generalMenu" color="primary"
-        aria-label="Ações">Ações</button>
 
-    <mat-menu #generalMenu="matMenu">
-        <button mat-menu-item (click)="openDialog()" color="primary" aria-label="Adicionar Tarefa">Adicionar</button>
-        <button mat-menu-item [matMenuTriggerFor]="order">Ordenar</button>
-    </mat-menu>
+    <mat-form-field class="example-form-field">
+        <input (keyup)="searchTerm()" style="color: #FFF;" matInput type="search" placeholder="Buscar"
+            [(ngModel)]="search">
+        <button mat-button *ngIf="search" matSuffix mat-icon-button aria-label="Limpar"
+            (click)="search=''; searchTerm();">
+            <mat-icon style="color: #FFF;">close</mat-icon>
+        </button>
+    </mat-form-field>
 
-    <mat-menu #order="matMenu">
-        <button mat-menu-item (click)="orderBy('priority')">Prioridade</button>
-        <button mat-menu-item (click)="orderBy('date')">Data de criação</button>
-        <button mat-menu-item (click)="orderBy('title')">Título</button>
-    </mat-menu>
+    <div>
+        <button mat-button mat-raised-button [matMenuTriggerFor]="generalMenu" color="primary"
+            aria-label="Ações">Ações</button>
+
+        <mat-menu #generalMenu="matMenu">
+            <button mat-menu-item (click)="openDialog()" color="primary"
+                aria-label="Adicionar Tarefa">Adicionar</button>
+            <button mat-menu-item [matMenuTriggerFor]="order">Ordenar</button>
+        </mat-menu>
+
+        <mat-menu #order="matMenu">
+            <button mat-menu-item (click)="orderBy('priority')">Prioridade</button>
+            <button mat-menu-item (click)="orderBy('date')">Data de criação</button>
+            <button mat-menu-item (click)="orderBy('title')">Título</button>
+        </mat-menu>
+    </div>
 </div>
 
 <div *ngIf="tasks.length; then haveTasks else noTasks"></div>
@@ -51,5 +64,5 @@
 </ng-template>
 
 <ng-template #noTasks>
-    <p>Nenhuma Tarefa Criada!</p>
+    <p>Nenhuma Tarefa Encontrada!</p>
 </ng-template>

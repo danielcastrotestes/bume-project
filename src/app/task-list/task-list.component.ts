@@ -15,6 +15,7 @@ export class TaskListComponent implements OnInit {
 
   tasks: Array<task> = [];
   newTask: task;
+  search: string = '';
 
   constructor(
     public dialog: MatDialog,
@@ -63,6 +64,10 @@ export class TaskListComponent implements OnInit {
         this.editTask(result);
       }
     });
+  }
+
+  searchTerm(): void {
+    this.taskService.searchByTitle(this.search)
   }
 
 }
