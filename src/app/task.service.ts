@@ -30,7 +30,7 @@ const ARRAY_TASKS: Array<task> = [
     id: 2,
     title: 'Pré Cadastrada 3',
     desc: 'Tarefa pré cadastrada 3',
-    date: new Date('2019-12-03'),
+    date: new Date(),
     priority: 3,
     done: false
   },
