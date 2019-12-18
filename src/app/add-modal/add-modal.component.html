@@ -1,0 +1,33 @@
+<h1 mat-dialog-title>Adicionar Tarefa</h1>
+<div mat-dialog-content>
+    <mat-label>Título</mat-label>
+    <mat-form-field>
+        <input matInput [(ngModel)]="modalInfo.title">
+    </mat-form-field>
+    <mat-label>Descrição</mat-label>
+    <mat-form-field>
+        <input matInput [(ngModel)]="modalInfo.desc">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Prioridade</mat-label>
+        <mat-select [(ngModel)]="modalInfo.priority">
+            <mat-option [value]="1">1</mat-option>
+            <mat-option [value]="2">2</mat-option>
+            <mat-option [value]="3">3</mat-option>
+            <mat-option [value]="4">4</mat-option>
+            <mat-option [value]="4">4</mat-option>
+            <mat-option [value]="5">5</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Concluída</mat-label>
+        <mat-select [(ngModel)]="modalInfo.done">
+            <mat-option [value]="false">Não</mat-option>
+            <mat-option [value]="true">Sim</mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancelar</button>
+    <button mat-button [mat-dialog-close]="modalInfo" cdkFocusInitial>{{ data ? 'Editar' : 'Adicionar' }}</button>
+</div>

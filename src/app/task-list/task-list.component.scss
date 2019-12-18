@@ -1,0 +1,19 @@
+.container-buttons {
+  margin-bottom: 20px;
+}
+
+.custom-mat-card {
+  margin-bottom: 15px;
+  transition: all 0.3s;
+  cursor: pointer;
+  box-shadow: 1px 1px 6px 0px rgba(0, 0, 0, 0.4);
+  &:hover {
+    box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.4);
+  }
+}
+
+.custom-card-header {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}

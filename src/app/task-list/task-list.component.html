@@ -1,0 +1,55 @@
+<div class="container-buttons">
+    <button mat-button mat-raised-button [matMenuTriggerFor]="generalMenu" color="primary"
+        aria-label="Ações">Ações</button>
+
+    <mat-menu #generalMenu="matMenu">
+        <button mat-menu-item (click)="openDialog()" color="primary" aria-label="Adicionar Tarefa">Adicionar</button>
+        <button mat-menu-item [matMenuTriggerFor]="order">Ordenar</button>
+    </mat-menu>
+
+    <mat-menu #order="matMenu">
+        <button mat-menu-item (click)="orderBy('priority')">Prioridade</button>
+        <button mat-menu-item (click)="orderBy('date')">Data de criação</button>
+        <button mat-menu-item (click)="orderBy('title')">Título</button>
+    </mat-menu>
+</div>
+
+<div *ngIf="tasks.length; then haveTasks else noTasks"></div>
+
+<ng-template #haveTasks>
+    <div *ngFor="let task of tasks">
+
+        <mat-card class="custom-mat-card">
+            <div class="custom-card-header">
+                <div style="flex: 1;" (click)="navigateToDetails(task.id)">
+                    <mat-card-title>{{ task.title }} - Prioridade: {{ task.priority }}</mat-card-title>
+                    <mat-card-subtitle>{{ task.date | date: 'dd/MM/yyyy HH:mm:ss' }}</mat-card-subtitle>
+                </div>
+                <div class="actions-container">
+                    <button mat-icon-button [matMenuTriggerFor]="actionMenu" aria-label="Ações">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #actionMenu="matMenu">
+                        <button mat-menu-item (click)="removeTask(task.id)">
+                            <span>Excluir</span>
+                        </button>
+                        <button mat-menu-item (click)="openDialog(task)">
+                            <span>Editar</span>
+                        </button>
+                    </mat-menu>
+                </div>
+            </div>
+
+            <mat-card-content (click)="navigateToDetails(task.id)">
+                <p>{{ task.desc }}</p>
+                <!-- <p>{{ task.priority }}</p>
+                <p>{{ task.done }}</p> -->
+            </mat-card-content>
+        </mat-card>
+
+    </div>
+</ng-template>
+
+<ng-template #noTasks>
+    <p>Nenhuma Tarefa Criada!</p>
+</ng-template>
